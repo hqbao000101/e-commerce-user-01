@@ -12,7 +12,7 @@ const Billboard: React.FC<BillboardProps> = ({ data }) => {
         style={{ backgroundImage: `url(${data?.imageUrl})` }}
       >
         <div className="flex flex-col items-center justify-center w-full h-full text-center gap-y-8">
-          <div className="max-w-xs text-3xl font-bold sm:text-5xl lg:text-6xl sm:max-w-xl">
+          <div className="flex items-center justify-center max-w-xs text-xl font-bold text-white sm:text-5xl lg:text-6xl sm:max-w-3xl px-24 py-10 bg-black shadow-[1px_1px_5px_white] bg-opacity-60 rounded-3xl select-none">
             {data?.label}
           </div>
         </div>
