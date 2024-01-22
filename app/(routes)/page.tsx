@@ -1,11 +1,11 @@
 import Billboard from "@/components/Billboard";
 import Container from "@/components/ui/Container";
-import getBillboards from "@/actions/get-billboards";
+import getBillboard from "@/actions/get-billboard";
 import getProducts from "@/actions/get-products";
 import ProductList from "@/components/product-list";
 
 const HomePage = async () => {
-  const billboard = await getBillboards("bec8a897-b020-4370-8409-b7735e8faf26");
+  const billboard = await getBillboard("bec8a897-b020-4370-8409-b7735e8faf26");
   const products = await getProducts({ isFeatured: true });
 
   return (
