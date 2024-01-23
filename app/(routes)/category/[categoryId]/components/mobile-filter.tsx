@@ -1,11 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { Plus } from "lucide-react";
+import { Plus, X } from "lucide-react";
 import { Dialog } from "@headlessui/react";
 
 import { Color, Size } from "@/types";
 import Button from "@/components/ui/Button";
+import IconButton from "@/components/ui/icon-button";
+import Filter from "./filter";
 
 interface MobileFiltersProps {
   sizes: Size[];
@@ -32,19 +34,20 @@ const MobileFilters: React.FC<MobileFiltersProps> = ({ sizes, colors }) => {
         onClose={onClose}
       >
         {/* Background */}
-        <Dialog.Panel>
-          <Dialog.Title>Deactivate account</Dialog.Title>
-          <Dialog.Description>
-            This will permanently deactivate your account
-          </Dialog.Description>
+        <div className="fixed inset-0 bg-black bg-opacity-25" />
 
-          <p>
-            Are you sure you want to deactivate your account? All of your data
-            will be permanently removed. This action cannot be undone.
-          </p>
-
-          <button onClick={onClose}>Cancel</button>
-        </Dialog.Panel>
+        {/* Dialog position */}
+        <div className="fixed inset-0 z-40 flex">
+          <Dialog.Panel className="relative flex flex-col w-full h-full max-w-xs py-4 pb-6 ml-auto overflow-y-auto bg-white shadow-xl">
+            <div className="flex items-center justify-center px-4">
+              <IconButton icon={<X size={15} />} onClick={onClose} />
+            </div>
+            <div className="p-4">
+              <Filter valueKey="sizeId" name="Sizes" data={sizes} />
+              <Filter valueKey="colorId" name="Colors" data={colors} />
+            </div>
+          </Dialog.Panel>
+        </div>
       </Dialog>
     </>
   );
