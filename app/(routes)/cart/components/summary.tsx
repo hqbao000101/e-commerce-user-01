@@ -2,7 +2,7 @@
 
 import axios from "axios";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useMemo } from "react";
+import { useEffect } from "react";
 import toast from "react-hot-toast";
 
 import Button from "@/components/ui/Button";
@@ -11,20 +11,21 @@ import useCart from "@/hooks/use-cart";
 
 const Summary = () => {
   const searchParams = useSearchParams();
-  const cart = useCart();
+  const items = useCart((state) => state.items);
+  const removeAll = useCart((state) => state.removeAll);
 
-  const totalPrice = useMemo(() => {
-    return cart.items.reduce((total, item) => total + Number(item.price), 0);
-  }, [cart]);
+  const totalPrice = items.reduce(
+    (total, item) => total + Number(item.price),
+    0
+  );
 
   const onCheckout = async () => {
     const response = await axios.post(
       `${process.env.NEXT_PUBLIC_API_STORE}/checkout`,
       {
-        productIds: cart.items.map((item) => item.id),
+        productIds: items.map((item) => item.id),
       }
     );
-    console.log(response);
 
     window.location = response.data.url;
   };
@@ -32,13 +33,13 @@ const Summary = () => {
   useEffect(() => {
     if (searchParams.get("success")) {
       toast.success("Payment Completed");
-      cart.removeAll();
+      removeAll();
     }
 
     if (searchParams.get("canceled")) {
       toast.error("Payment Canceled");
     }
-  }, [searchParams, cart]);
+  }, [searchParams, removeAll]);
 
   return (
     <div className="px-4 py-6 mt-16 rounded-lg bg-gray-50 sm:p-6 lg:col-span-5 lg:mt-0 lg:p-8">
@@ -49,7 +50,11 @@ const Summary = () => {
           <Currency value={totalPrice} />
         </div>
       </div>
-      <Button className="w-full mt-6" onClick={onCheckout}>
+      <Button
+        className="w-full mt-6"
+        onClick={onCheckout}
+        disabled={items.length === 0}
+      >
         Checkout
       </Button>
     </div>
