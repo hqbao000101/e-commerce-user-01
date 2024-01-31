@@ -1,11 +1,12 @@
 "use client";
 
+import { X } from "lucide-react";
+import Image from "next/image";
+
 import Currency from "@/components/ui/currency";
 import IconButton from "@/components/ui/icon-button";
 import useCart from "@/hooks/use-cart";
 import { Product } from "@/types";
-import { X } from "lucide-react";
-import Image from "next/image";
 
 interface CartItemProps {
   data: Product;
