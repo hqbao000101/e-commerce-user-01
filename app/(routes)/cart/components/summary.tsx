@@ -2,7 +2,7 @@
 
 import axios from "axios";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useMemo } from "react";
+import { useEffect } from "react";
 import toast from "react-hot-toast";
 
 import Button from "@/components/ui/Button";
@@ -14,9 +14,9 @@ const Summary = () => {
   const items = useCart((state) => state.items);
   const removeAll = useCart((state) => state.removeAll);
 
-  const totalPrice = useMemo(
-    () => items.reduce((total, item) => total + Number(item.price), 0),
-    [items]
+  const totalPrice = items.reduce(
+    (total, item) => total + Number(item.price),
+    0
   );
 
   const onCheckout = async () => {
